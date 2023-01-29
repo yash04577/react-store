@@ -21,15 +21,67 @@ const Home = () => {
     <Wrapper>
         <Container>
             <Banner></Banner>
-            <Products></Products>
-            {/* <br />
-            <hr />
+            <Products heading={"smartphones"}></Products>
             <br />
-            <Products></Products>
             <br />
-            <hr />
+            <Products heading={"laptops"}></Products>
             <br />
-            <Products></Products> */}
+            <br />
+            <Products heading={"fragrances"}></Products>
+            <br />
+            <br />
+            <Products heading={"skincare"}></Products>
+            <br />
+            <br />
+            <Products heading={"groceries"}></Products>
+            <br />
+            <br />
+            <Products heading={"home-decoration"}></Products>
+            <br />
+            <br />
+            <Products heading={"furniture"}></Products>
+            <br />
+            <br />
+            <Products heading={"tops"}></Products>
+            <br />
+            <br />
+            <Products heading={"womens-dresses"}></Products>
+            <br />
+            <br />
+            <Products heading={"womens-shoes"}></Products>
+            <br />
+            <br />
+            <Products heading={"mens-shirts"}></Products>
+            <br />
+            <br />
+            <Products heading={"mens-shoes"}></Products>
+            <br />
+            <br />
+            <Products heading={"mens-watches"}></Products>
+            <br />
+            <br />
+            <Products heading={"womens-watches"}></Products>
+            <br />
+            <br />
+            <Products heading={"womens-bags"}></Products>
+            <br />
+            <br />
+            <Products heading={"womens-jewellery"}></Products>
+            <br />
+            <br />
+            <Products heading={"sunglasses"}></Products>
+            <br />
+            <br />
+            <Products heading={"automotive"}></Products>
+            <br />
+            <br />
+            <Products heading={"motorcycle"}></Products>
+            <br />
+            <br />
+            <Products heading={"lighting"}></Products>
+            <br />
+            <br />
+
         </Container>
     </Wrapper>
   )

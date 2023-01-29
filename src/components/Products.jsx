@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import Context from '../context/Context'
 import ProductCard from './ProductCard'
-
+import axios from 'axios';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -29,18 +29,37 @@ const Heading = styled.h1`
 `
 
 
-const Products = () => {
+const Products = (props) => {
 
+  const [products, setProducts] = useState([]);
 
+  const category = props.heading;
+
+  const getproducts = async () =>{
+
+    const {data} = await axios.get(`https://dummyjson.com/products/category/${category}`);
+    setProducts(data.products);
+  }
   const context = useContext(Context);
+
+
+  useEffect(()=>{
+    getproducts();
+  },[])
 
   return (
     <Wrapper>
-        <Heading>Headphone</Heading>
+        <Heading>{props.heading}</Heading>
         <Container>
 
         {
-          context.getAllProduct().map(elem=>{
+          // context.getAllProduct().map(elem=>{
+          //   return(
+          //     <ProductCard elem={elem}></ProductCard>
+          //   )
+          // })
+
+          products.map(elem=>{
             return(
               <ProductCard elem={elem}></ProductCard>
             )
