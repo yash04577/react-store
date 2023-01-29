@@ -11,6 +11,8 @@ const State = (props) => {
     const[cartItems, setCartItems] = useState([]);
     const [cartItemsPrice, setCartItemsPrice] = useState(0);
 
+    const[searchItem, setSearchItem] = useState({});
+
     const getAllProduct = () =>{
         return allProducts;
     }
@@ -51,12 +53,28 @@ const State = (props) => {
         return cartItemsPrice;
     }
 
+    const getSearchItem = () =>{
+        return searchItem;
+    }
+
+    const updateSearchItem = async (query) =>{
+        // fetch()
+        // const {data} = await axios.get(`https://dummyjson.com/products/search?q=${query}`)
+        // // const {data} = await axios.get("https://dummyjson.com/products/category/smartphones")
+        // console.log("data = ", data);
+        // // setAllProducts(data.products)
+        // await setSearchItem(data.products[0]);
+        // // updateSingleProduct(searchItem[0]);
+        // setSingleProduct(searchItem);
+        // console.log("single = ", searchItem)
+    }
+
     useEffect(()=>{
         getData();
     },[])
 
   return (
-    <Context.Provider value={{getAllProduct, getSingleProduct, updateSingleProduct, getCartItem, updateCartItems, removeFromCart, getCartItemsPrice}}>
+    <Context.Provider value={{getAllProduct, getSingleProduct, updateSingleProduct, getCartItem, updateCartItems, removeFromCart, getCartItemsPrice, getSearchItem, updateSearchItem}}>
         {props.children}
     </Context.Provider>
   )

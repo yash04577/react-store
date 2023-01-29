@@ -41,7 +41,7 @@ const MainImg = styled.div`
 const Image = styled.img`
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 `
 
 const MiniImageContainer = styled.div`
@@ -131,19 +131,18 @@ const ReplaceContainer = styled.div`
 
 const SinglePage = () => {
 
-    const [product, setProduct] = useState({images:[ "https://i.dummyjson.com/data/products/1/1.jpg", "https://i.dummyjson.com/data/products/1/2.jpg", "https://i.dummyjson.com/data/products/1/3.jpg"]})
     const context = useContext(Context);
+    const [product, setProduct] = useState({images:[ "https://i.dummyjson.com/data/products/1/1.jpg", "https://i.dummyjson.com/data/products/1/2.jpg", "https://i.dummyjson.com/data/products/1/3.jpg"]})
     const [mainImagUrl, setMainImageUrl] = useState("");
 
     const addHandler = (item) =>{
         context.updateCartItems(item);   
     }
 
+
     useEffect(() => {
-      setProduct(context.getSingleProduct());
-      setMainImageUrl(product.thumbnail);
-      console.log("url = ", product.thumbnail);
-    },)
+        setProduct(context.getSingleProduct());
+    })
     
    
 
@@ -154,15 +153,26 @@ const SinglePage = () => {
                 <MainImg>
                     {/* <Image src={product.thumbnail}></Image>  */}
                     {/* {setMainImageUrl(product.thumbnail)} */}
-                    <Image src={mainImagUrl}></Image> 
+                    <Image src={mainImagUrl || product.images[0]}></Image> 
                 </MainImg>
                 <MiniImageContainer>
-                    <input type="radio" name="a" id="1" class="input-hidden" />
+                    {/* <input type="radio" name="a" id="1" class="input-hidden" />
                     <label htmlFor="1"><img src={product.images[0]} alt="" width={"120px"}/></label>
                     <input type="radio" name="a" id="2" class="input-hidden" />
                     <label htmlFor="2"><img src={product.images[1]} alt="" width={"120px"}/></label>
                     <input type="radio" name="a" id="3" class="input-hidden"/>
-                    <label htmlFor="3"><img src={product.images[2]} alt="" width={"120px"}/></label>
+                    <label htmlFor="3"><img src={product.images[2]} alt="" width={"120px"}/></label> */}
+
+                    <button>
+                        <img src={product.images[0]}  width={"120px"} height={"90px"} onClick={()=>setMainImageUrl(product.images[0])}/>
+                    </button>
+                    <button>
+                        <img src={product.images[1]} alt="" srcset="" width={"120px"} height={"90px"} onClick={()=>setMainImageUrl(product.images[1])}/>
+                    </button>
+                    <button>
+                        <img src={product.images[2]} alt="" srcset="" width={"120px"} height={"90px"} onClick={()=>setMainImageUrl(product.images[2])}/>
+                    </button>
+                   
                 </MiniImageContainer>
             </ImageContainer>
             <InformationContainer>

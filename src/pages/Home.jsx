@@ -22,14 +22,14 @@ const Home = () => {
         <Container>
             <Banner></Banner>
             <Products></Products>
-            <br />
+            {/* <br />
             <hr />
             <br />
             <Products></Products>
             <br />
             <hr />
             <br />
-            <Products></Products>
+            <Products></Products> */}
         </Container>
     </Wrapper>
   )
