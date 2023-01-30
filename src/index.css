@@ -6,6 +6,10 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -26,4 +30,9 @@ code {
 input[type=radio]:checked + label>img {
   border: 1px solid #fff;
   box-shadow: 0 0 3px 3px #090;
+}
+
+
+.test{
+  color: gold;
 }

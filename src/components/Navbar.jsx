@@ -8,6 +8,7 @@ import { Badge } from '@material-ui/core'
 import Context from '../context/Context'
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { HashScroll } from "react-hash-scroll";
 // import { Badge } from '@material-ui/icons'
 
 const Wrapper = styled.div`
@@ -89,22 +90,29 @@ const Navbar = () => {
     const [searchQuery, setSearchQuery] = useState("");
 
 
+
     const navigate = useNavigate();
 
     const searchClickHandler = async () => {
 
-        const {data} = await axios.get(`https://dummyjson.com/products/search?q=${searchQuery}`)
-        console.log("test = ", data.products[0])
-        // console.log("query = ", query)
-        context.updateSingleProduct(data.products[0]);
+        // const {data} = await axios.get(`https://dummyjson.com/products/search?q=${searchQuery}`)
+        // console.log("test = ", data.products[0])
+        // // console.log("query = ", query)
+        // context.updateSingleProduct(data.products[0]);
 
-        console.log("len = ", data.products.length)
-        if(data.products.length > 0){
-            navigate("/singleproduct")
-        }
-        else{
-            window.alert("product not avilable")
-        }
+        // console.log("len = ", data.products.length)
+        // if(data.products.length > 0){
+        //     navigate("/singleproduct")
+        // }
+        // else{
+        //     window.alert("product not avilable")
+        // }
+
+
+        context.updateSearchItem(searchQuery);
+        document.getElementById("searchItemsContainer").style.display = "flex";
+        // useNavigate("")
+
     }
 
     const catHandler = () =>{
@@ -131,6 +139,7 @@ const Navbar = () => {
     return (
         <>
             <Wrapper>
+
                 <Container>
                     <Logo>
                         <NavLink to="/">
@@ -141,7 +150,7 @@ const Navbar = () => {
                         <NavLink to="#"  onClick={catHandler}>
                             Categories
                             <CategoriesContainer id="categorie">
-                                <NavLink to="/electronics" >Electronics</NavLink>
+                                <NavLink hash="#temp" >Electronics</NavLink>
                                 <NavLink to="/smartphone" >SmartPhone</NavLink>
                                 <NavLink to="/clothing" >Clothing</NavLink>
                                 <NavLink to="/fashion" >Fashion</NavLink>
@@ -152,7 +161,9 @@ const Navbar = () => {
                         <NavLink to="#" >Delivery</NavLink>
                         <SerachInput >
                             <input type="text" id='searchInput' value={searchQuery} onChange={searchChangeHandler} style={{ width: "100%", paddingLeft:"10px" }} placeholder="Search Here"></input>
-                            <SearchOutlined onClick={()=>searchClickHandler()} style={{ cursor: "pointer", position: "absolute", right: "0px", marginRight: "7px", top: "2px" }}></SearchOutlined>
+                            <a href="#searchItemsContainer">
+                                <SearchOutlined onClick={()=>searchClickHandler()} style={{ cursor: "pointer", position: "absolute", right: "0px", marginRight: "7px", top: "2px" }}></SearchOutlined>
+                            </a>
                         </SerachInput>
                         <NavLink to="#"><PersonOutlineOutlined /></NavLink>
                         <Badge badgeContent={context.getCartItem().length} color="primary" style={{ marginRight: "20px" }}>

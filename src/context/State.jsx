@@ -11,7 +11,7 @@ const State = (props) => {
     const[cartItems, setCartItems] = useState([]);
     const [cartItemsPrice, setCartItemsPrice] = useState(0);
 
-    const[searchItem, setSearchItem] = useState({});
+    const[searchItem, setSearchItem] = useState([]);
 
     const getAllProduct = () =>{
         return allProducts;
@@ -58,15 +58,20 @@ const State = (props) => {
     }
 
     const updateSearchItem = async (query) =>{
-        // fetch()
-        // const {data} = await axios.get(`https://dummyjson.com/products/search?q=${query}`)
-        // // const {data} = await axios.get("https://dummyjson.com/products/category/smartphones")
-        // console.log("data = ", data);
-        // // setAllProducts(data.products)
-        // await setSearchItem(data.products[0]);
-        // // updateSingleProduct(searchItem[0]);
-        // setSingleProduct(searchItem);
-        // console.log("single = ", searchItem)
+        const {data} = await axios.get(`https://dummyjson.com/products/search?q=${query}`)
+        // console.log("test = ", data.products[0])
+        // console.log("query = ", query)
+        // context.updateSingleProduct(data.products[0]);
+
+        // console.log("len = ", data.products.length)
+        if(data.products.length > 0){
+            // navigate("/singleproduct")
+
+            setSearchItem(data.products);
+        }
+        else{
+            window.alert("product not avilable")
+        }
     }
 
     useEffect(()=>{

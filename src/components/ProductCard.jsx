@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import Context from '../context/Context'
 
 const Wrapper = styled.div`
     width: 300px;
     height: 320px;
-    /* border: 2px solid black; */
-    box-shadow: 0 0 5px;
+    /* border: 10px solid black; */
+    /* box-shadow: 0 0 5px; */
 
     &:hover{
         transition: 0.3s;
@@ -34,6 +34,8 @@ const Image = styled.img`
 
 const Title = styled.h3`
     margin-left: 15px;
+    max-height: 25px;
+    overflow: hidden;
 `
 
 const Price = styled.h4`
@@ -45,7 +47,8 @@ const ButtonContainer = styled.div`
 `
 
 const Button = styled.button`
-    width: 130px;
+    /* width: 130px; */
+    width: 90%;
     height: 40px;
     background-color: transparent;
     border-radius: 12px;
@@ -59,6 +62,11 @@ const Button = styled.button`
 
     &:active{
         box-shadow: 0 0 6px red;
+    }
+
+    &:hover{
+        background-color: #0080809e;
+        color: black;
     }
 `
 
@@ -81,14 +89,18 @@ const ShowMoreButton = styled.div`
     }
 `
 
+const ListViewContainer = styled.div`
+`
 
 const ProductCard = (props) => {
     
+    const navigate = useNavigate();
     // console.log("elem ", props.elem)
     const context = useContext(Context);
 
     const showMoreHandler = (elem) =>{
         context.updateSingleProduct(elem);
+        navigate("/singleproduct")
     }
 
     const cartHandler = (elem) =>{
@@ -98,18 +110,20 @@ const ProductCard = (props) => {
   return (
 
     <Wrapper>
-        <ImageContainer>
+        <ImageContainer onClick={()=>showMoreHandler(props.elem)}>
             <Image src={props.elem.thumbnail}></Image>
         </ImageContainer>
-        <Title>{props.elem.title}</Title>
-        <Price>{props.elem.price}$</Price>
-        <ButtonContainer>
-            <Button onClick={()=>{cartHandler(props.elem)}}>Add to Cart</Button>
-            <ShowMoreButton>
-                <Link onClick={()=>showMoreHandler(props.elem)} to={"/singleproduct"} style={{textDecoration:"none", color:"black"}}>Show More</Link>
-                {/* show more */}
-            </ShowMoreButton>
-        </ButtonContainer>
+        <ListViewContainer>
+            <Title>{props.elem.title}</Title>
+            <Price>{props.elem.price}$</Price>
+            <ButtonContainer>
+                <Button onClick={()=>{cartHandler(props.elem)}}>Add to Cart</Button>
+                {/* <ShowMoreButton>
+                    <Link onClick={()=>showMoreHandler(props.elem)} to={"/singleproduct"} style={{textDecoration:"none", color:"black"}}>Show More</Link>
+                    {/* show more }
+                </ShowMoreButton> */}
+            </ButtonContainer>
+        </ListViewContainer>
     </Wrapper>
   )
 }

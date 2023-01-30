@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: column;
+    
     /* border: 2px solid gold; */
 `
 
@@ -22,7 +23,9 @@ const Container = styled.div`
 `
 
 
-const Heading = styled.h1`
+const Heading = styled.h1.attrs(props => ({
+  id:props.name
+}))`
     font-size: 20px;
     padding: 20px 0;
     font-size: 35px;
@@ -48,8 +51,8 @@ const Products = (props) => {
   },[])
 
   return (
-    <Wrapper>
-        <Heading>{props.heading}</Heading>
+    <Wrapper id="temp">
+        <Heading name={props.heading}>{props.heading}</Heading>
         <Container>
 
         {

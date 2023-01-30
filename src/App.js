@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <State>
-      <Annoucement></Annoucement>
+      {/* <Annoucement></Annoucement> */}
       <BrowserRouter>
       <Navbar></Navbar>
         <Routes>
