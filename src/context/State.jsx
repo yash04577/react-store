@@ -20,7 +20,7 @@ const State = (props) => {
     const getData = async () =>{
         const {data} = await axios.get("https://dummyjson.com/products")
         // const {data} = await axios.get("https://dummyjson.com/products/category/smartphones")
-        console.log(data.products);
+        // console.log(data.products);
         setAllProducts(data.products)
     }
 
@@ -38,14 +38,44 @@ const State = (props) => {
     }
 
     const updateCartItems = (item)=>{
-        setCartItems((cartItems)=> [...cartItems, item]);
-        let temp = eval(item.price);
-        setCartItemsPrice(cartItemsPrice + temp);
+
+        // item.quantity = 1;
+        let isPresent = false;
+
+        cartItems.map(citem =>{
+
+            console.log("quantity ",item.quantity)
+
+            if(citem.title === item.title){
+                citem.quantity++;
+                isPresent = true;
+
+                let temp = eval(item.price);
+                setCartItemsPrice(cartItemsPrice + temp);
+            }
+        })
+
+        if(!isPresent){
+            item.quantity = 1;
+            setCartItems((cartItems)=> [...cartItems, item]);
+            let temp = eval(item.price);
+            setCartItemsPrice(cartItemsPrice + temp);
+        }
+
+        
     }
 
     const removeFromCart = (item) =>{
+
+
         setCartItems((cartItems).filter(citem=>citem.title !== item.title))
         let temp = eval(item.price);
+        temp *= eval(item.quantity);
+        setCartItemsPrice(cartItemsPrice - temp);
+    }
+
+    const removePrice = (price) =>{
+        const temp = eval(price);
         setCartItemsPrice(cartItemsPrice - temp);
     }
 
@@ -74,12 +104,24 @@ const State = (props) => {
         }
     }
 
+
+    const getBadgeCount = () =>{
+        let badgeCount = 0;
+
+        cartItems.forEach(item =>{
+            const temp = eval(item.quantity);
+            badgeCount += temp;
+        })
+
+        return badgeCount;
+    }
+
     useEffect(()=>{
         getData();
-    },[])
+    })
 
   return (
-    <Context.Provider value={{getAllProduct, getSingleProduct, updateSingleProduct, getCartItem, updateCartItems, removeFromCart, getCartItemsPrice, getSearchItem, updateSearchItem}}>
+    <Context.Provider value={{getAllProduct, getSingleProduct, updateSingleProduct, getCartItem, updateCartItems, removeFromCart, getCartItemsPrice, getSearchItem, updateSearchItem, removePrice, getBadgeCount}}>
         {props.children}
     </Context.Provider>
   )

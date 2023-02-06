@@ -45,9 +45,9 @@ const SearchedProducts = (props) => {
         <Container>
 
         {
-          context.getSearchItem().map(elem=>{
+          context.getSearchItem().map((elem, index)=>{
             return(
-              <ProductCard elem={elem}></ProductCard>
+              <ProductCard elem={elem} key={index}></ProductCard>
             )
           })
         }

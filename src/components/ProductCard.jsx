@@ -3,26 +3,27 @@ import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom"
 import Context from '../context/Context'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs({
+    className:"productCardWrapper"
+})`
     width: 300px;
     height: 320px;
-    /* border: 10px solid black; */
-    /* box-shadow: 0 0 5px; */
 
     &:hover{
         transition: 0.3s;
-        /* scale: (1.1); */
-        /* background-color: teal; */
-        /* background-color: gainsboro; */
         scale: 1.1;
     }
 
 `
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div.attrs({
+    className:"productCardImgContainer"
+})`
     width: 90%;
     height: 60%;
     margin: 10px auto;
+
+
 `
 
 const Image = styled.img`
@@ -90,6 +91,15 @@ const ShowMoreButton = styled.div`
 `
 
 const ListViewContainer = styled.div`
+    /* display: flex; */
+    flex: 1;
+`
+
+const DescriptionContainer = styled.p.attrs({
+    className:"productCardPara"
+})`
+    display: none;
+    padding: 1rem;
 `
 
 const ProductCard = (props) => {
@@ -116,12 +126,11 @@ const ProductCard = (props) => {
         <ListViewContainer>
             <Title>{props.elem.title}</Title>
             <Price>{props.elem.price}$</Price>
+            <DescriptionContainer>
+                {props.elem.description}
+            </DescriptionContainer>
             <ButtonContainer>
                 <Button onClick={()=>{cartHandler(props.elem)}}>Add to Cart</Button>
-                {/* <ShowMoreButton>
-                    <Link onClick={()=>showMoreHandler(props.elem)} to={"/singleproduct"} style={{textDecoration:"none", color:"black"}}>Show More</Link>
-                    {/* show more }
-                </ShowMoreButton> */}
             </ButtonContainer>
         </ListViewContainer>
     </Wrapper>

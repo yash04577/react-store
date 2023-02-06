@@ -1,6 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Context from '../context/Context'
+import emptyCartImg from "../images/emptyCart.jpg"
+import emptyCartImg2 from "../images/4610092.avif"
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -28,6 +30,9 @@ const CartContainer = styled.div`
     background-color: #fff;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
+    /* border: 3px solid rebeccapurple; */
+    position: relative;
+   
 `
 
 const SummaryContainer = styled.div`
@@ -80,6 +85,23 @@ const CountContainer = styled.div`
     align-items: center;
     justify-content: center;
     font-size: x-large;
+
+    button{
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        font-size: large;
+        cursor:pointer;
+
+        &:hover{
+            transform: scale(1.2);
+        }
+
+        &:active{
+            color:rebeccapurple;
+        }
+    }
 `
 
 const PriceContainer = styled.div`
@@ -187,75 +209,132 @@ const CheckOutBtn = styled.button`
 
 `
 
+const BgContainer = styled.div.attrs({
+    id:"cartBgContainer"
+})`
+    /* border: 2px solid red; */
+    position: absolute;;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    overflow: hidden;
+`
+
+const BgImg = styled.img`
+    width: 100%; 
+    height: 100%; 
+`
+
 const Cart = () => {
 
     const context = useContext(Context);
+    const[cnt, setCnt] = useState(0);
 
     // let totalPrice = 0;
 
-    const removeHandler = (item) =>{
+    const removeHandler = (item) => {
         context.removeFromCart(item);
     }
 
-    useEffect(() => {
-       
-    }, [])
-    
+    const test = () =>{
+        if(context.getCartItem().length == 0){
+            // console.log("cart is empty")
+            document.getElementById("cartBgContainer").style.zIndex = 1;
+        }
+        
+        else{
+            document.getElementById("cartBgContainer").style.zIndex = -1;
 
-  return (
-    <Wrapper>
-        <Container>
-            <CartContainer>
-                <Title>Shopping Cart</Title>
-                {
-                    context.getCartItem().map((item)=>{
-                        return(
-                            <Item>
-                                <ImageContainer>
-                                    <Image src={item.thumbnail}></Image>
-                                </ImageContainer>
-                                <ItemNameContainer>
-                                    <ItemName>{item.title}</ItemName>
-                                </ItemNameContainer>
-                                <CountContainer>1</CountContainer>
-                                <PriceContainer>{item.price}$</PriceContainer>
-                                <RemoveBtnContainer>
-                                    <RemoveBtn onClick={() => removeHandler(item)}>X</RemoveBtn>
-                                </RemoveBtnContainer>
-                            </Item>
-                        )
-                    })
-                }
-            </CartContainer>
-            <SummaryContainer>
-                <SummaryTitle>Summary</SummaryTitle>
-                <hr />
-                <ItemsCountContainer>
-                    <CountItems>ITEMS {context.getCartItem().length}</CountItems>
-                    <CountItems>{context.getCartItemsPrice()}$</CountItems>
-                </ItemsCountContainer>
-                <ShippingContainer>
-                    <ShippingHeading>SHIPPING</ShippingHeading>
-                    <ShippingPrice>Standard-Delivery 5$</ShippingPrice>
-                </ShippingContainer>
-                <DiscountContainer>
-                    <DiscountHeading>PROMO CODE</DiscountHeading>
-                    <DiscountInput placeholder="Enter Your Code Here" ></DiscountInput>
-                </DiscountContainer>
-                <br />
-                <br />
-                <hr />
-                <TotalContainer>
-                    <TotalHeading>TOTAL PRICE</TotalHeading>
-                    <TotalPrice>{context.getCartItemsPrice() + 5}$</TotalPrice>
-                </TotalContainer>
-                <CheckoutContainer>
-                    <CheckOutBtn>CHECKOUT</CheckOutBtn>
-                </CheckoutContainer>
-            </SummaryContainer>
-        </Container>
-    </Wrapper>
-  )
+        }
+    }
+
+
+    const incrementItem = (item) =>{
+        context.updateCartItems(item);
+    }
+
+    const decrementItem = (item) =>{
+       
+        if(item.quantity > 1){
+            context.removePrice(item.price);
+        }
+        const check = item.quantity > 1 ? item.quantity-- : 1
+
+        
+    }
+
+
+    useEffect(() => {
+        test();
+    })
+
+
+    return (
+        <Wrapper>
+            <Container>
+                <CartContainer>
+                    <Title>Shopping Cart</Title>
+                    <BgContainer>
+                        <BgImg src={emptyCartImg}></BgImg>
+                    </BgContainer>
+                    {
+
+                        context.getCartItem().map((item, index) => {
+
+                            return (
+
+                                <Item key={index}>
+                                    <ImageContainer>
+                                        <Image src={item.thumbnail}></Image>
+                                    </ImageContainer>
+                                    <ItemNameContainer>
+                                        <ItemName>{item.title}</ItemName>
+                                    </ItemNameContainer>
+                                    <CountContainer>
+                                        <button onClick={()=>incrementItem(item)}>+</button>
+                                        {item.quantity}
+                                        <button onClick={()=>decrementItem(item)}>-</button>
+                                    </CountContainer>
+                                    <PriceContainer>{item.price}$</PriceContainer>
+                                    <RemoveBtnContainer>
+                                        <RemoveBtn onClick={() => removeHandler(item)}>X</RemoveBtn>
+                                    </RemoveBtnContainer>
+                                </Item>
+                            )
+                        })
+                    }
+                </CartContainer>
+                <SummaryContainer>
+                    <SummaryTitle>Summary</SummaryTitle>
+                    <hr />
+                    <ItemsCountContainer>
+                        <CountItems>ITEMS {context.getCartItem().length}</CountItems>
+                        <CountItems>{context.getCartItemsPrice()}$</CountItems>
+                    </ItemsCountContainer>
+                    <ShippingContainer>
+                        <ShippingHeading>SHIPPING</ShippingHeading>
+                        <ShippingPrice>Standard-Delivery 5$</ShippingPrice>
+                    </ShippingContainer>
+                    <DiscountContainer>
+                        <DiscountHeading>PROMO CODE</DiscountHeading>
+                        <DiscountInput placeholder="Enter Your Code Here" ></DiscountInput>
+                    </DiscountContainer>
+                    <br />
+                    <br />
+                    <hr />
+                    <TotalContainer>
+                        <TotalHeading>TOTAL PRICE</TotalHeading>
+                        <TotalPrice>{context.getCartItemsPrice() + 5}$</TotalPrice>
+                    </TotalContainer>
+                    <CheckoutContainer>
+                        <CheckOutBtn>CHECKOUT</CheckOutBtn>
+                    </CheckoutContainer>
+                </SummaryContainer>
+            </Container>
+        </Wrapper>
+    )
 }
 
 export default Cart

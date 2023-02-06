@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../context/Context'
 import ProductCard from './ProductCard'
@@ -24,7 +24,7 @@ const Container = styled.div`
 
 
 const Heading = styled.h1.attrs(props => ({
-  id:props.name
+  id: props.name
 }))`
     font-size: 20px;
     padding: 20px 0;
@@ -38,45 +38,36 @@ const Products = (props) => {
 
   const category = props.heading;
 
-  const getproducts = async () =>{
+  const getproducts = async () => {
 
-    const {data} = await axios.get(`https://dummyjson.com/products/category/${category}`);
+    const { data } = await axios.get(`https://dummyjson.com/products/category/${category}`);
     setProducts(data.products);
+
   }
   const context = useContext(Context);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getproducts();
-  },[])
+  }, [])
 
   return (
     <Wrapper id="temp">
-        <Heading name={props.heading}>{props.heading}</Heading>
-        <Container>
+      <Heading name={props.heading}>{props.heading}</Heading>
+      <Container>
 
         {
-          // context.getAllProduct().map(elem=>{
-          //   return(
-          //     <ProductCard elem={elem}></ProductCard>
-          //   )
-          // })
+          products.map((elem, index) => {
+            if (elem.price <= props.filterPrice) {
 
-          products.map(elem=>{
-            return(
-              <ProductCard elem={elem}></ProductCard>
-            )
+              return (
+                <ProductCard elem={elem} key={index}></ProductCard>
+              )
+            }
           })
         }
-        {/* <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard> */}
-        </Container>
+
+      </Container>
     </Wrapper>
   )
 }

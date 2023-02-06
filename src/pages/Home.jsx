@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Banner from '../components/Banner'
@@ -18,17 +18,19 @@ const Container = styled.div`
     width: 70%;
     /* height: 100%; */
     margin: 0 auto;
+    /* margin-left: 14rem; */
+    margin-left: 20rem;
     /* border: 2px solid red; */
 `
 
 
 const SidebarWrapper = styled.div`
-    width: 20vw;
+    width: 14rem;
     height: 100vh;
     /* border: 2px solid teal; */
     background-color: ghostwhite;
-    position: sticky;
-    top: 22px;
+    position: fixed;
+    top: 60px;
 `
 
 
@@ -93,7 +95,19 @@ const PriceFilterContainer = styled.div`
         background-color: #0080809e;
         color: black;
     }
+  }
+
+
+  div{
+    display:flex;
+    justify-content: space-between;
+    width:70%;
+    label{
+      text-transform: uppercase;
     }
+  }
+
+  
 `
 
 const PriceFilter = styled.input`
@@ -108,6 +122,81 @@ const Home = () => {
   const clickHandler = () =>{
     // navigate(".groceries")
     // to=""
+  }
+
+
+  const viewToggler = () =>{
+    const wrapper = document.getElementsByClassName("productCardWrapper");
+    const imgContainer = document.getElementsByClassName("productCardImgContainer");
+    const cardParagraph = document.getElementsByClassName("productCardPara");
+
+    
+
+  
+
+    
+
+    // console.log(cardParagraph)
+    console.log(wrapper)
+    // wrapper[0].style.color = "red"
+    // wrapper.style.color = "red"
+    console.log("clicked on view button ")
+
+    const wrapperArray = Array.from(wrapper);
+    const imgContainerArray = Array.from(imgContainer);
+    const paragraphArray = Array.from(cardParagraph);
+
+    
+    if(wrapper[0].style.display == "flex"){
+      wrapperArray.forEach(elem=>{
+        elem.style.display = "block";
+        elem.style.width = "300px";
+        elem.style.marginLeft = "unset";
+      })
+  
+      imgContainerArray.forEach(elem=>{
+        elem.style.height = "60%";
+        elem.flex = "1";
+        elem.style.width = "90%";
+      })
+  
+      paragraphArray.forEach(elem=>{
+        elem.style.display = "none";
+      })
+    }
+
+    else{
+      wrapperArray.forEach(elem=>{
+        elem.style.display = "flex";
+        elem.style.width = "950px";
+        elem.style.marginLeft = "2rem";
+      })
+  
+      imgContainerArray.forEach(elem=>{
+        elem.style.height = "90%";
+        elem.flex = "1";
+        elem.style.width = "500px";
+      })
+  
+      paragraphArray.forEach(elem=>{
+        elem.style.display = "block";
+      })
+    }
+
+    
+
+  }
+
+  const [fprice, setFprice] = useState(10000);
+
+  // let price = 1000;
+
+  const check = () =>{
+
+    setFprice(document.getElementById("priceFilter").value);
+    // price = document.getElementById("priceFilter").value;
+
+    console.log("price = ", fprice)
   }
 
 
@@ -129,8 +218,13 @@ const Home = () => {
 
           <PriceFilterContainer>
             <Heading>Filter by Price</Heading>
-            <PriceFilter type='range' ></PriceFilter>
-            <button>Clear filter</button>
+            <PriceFilter type='range' min="0" max="3000" step="100" name="priceFilter" id="priceFilter" value={fprice} onChange={check}></PriceFilter>
+            <div>
+              <label htmlFor="priceFilter">min 1$</label>
+              <label htmlFor="priceFilter">max 3000$</label>
+            </div>
+            {/* <button>Clear filter</button> */}
+            <button onClick={viewToggler}>List/grid view</button>
           </PriceFilterContainer>
 
         </SidebarWrapper>
@@ -138,66 +232,66 @@ const Home = () => {
             
             <Banner></Banner>
             <SearchedProducts heading={"Similar items in search"}></SearchedProducts>
-            <Products heading={"smartphones"}></Products>
+            <Products heading={"smartphones"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"laptops"}></Products>
+            <Products heading={"laptops"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"fragrances"}></Products>
+            <Products heading={"fragrances"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"skincare"}></Products>
+            <Products heading={"skincare"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"groceries"}></Products>
+            {/* <Products heading={"groceries"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"home-decoration"}></Products>
+            <Products heading={"home-decoration"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"furniture"}></Products>
+            <Products heading={"furniture"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"tops"}></Products>
+            <Products heading={"tops"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"womens-dresses"}></Products>
+            <Products heading={"womens-dresses"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"womens-shoes"}></Products>
+            <Products heading={"womens-shoes"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"mens-shirts"}></Products>
+            <Products heading={"mens-shirts"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"mens-shoes"}></Products>
+            <Products heading={"mens-shoes"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"mens-watches"}></Products>
+            <Products heading={"mens-watches"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"womens-watches"}></Products>
+            <Products heading={"womens-watches"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"womens-bags"}></Products>
+            <Products heading={"womens-bags"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"womens-jewellery"}></Products>
+            <Products heading={"womens-jewellery"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"sunglasses"}></Products>
+            <Products heading={"sunglasses"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"automotive"}></Products>
+            <Products heading={"automotive"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"motorcycle"}></Products>
+            <Products heading={"motorcycle"} filterPrice={fprice}></Products>
             <br />
             <br />
-            <Products heading={"lighting"}></Products>
+            <Products heading={"lighting"} filterPrice={fprice}></Products>
             <br />
-            <br /> 
+            <br />  */}
 
         </Container>
 
