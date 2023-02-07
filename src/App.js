@@ -6,6 +6,11 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Context from "./context/Context";
 import State from "./context/State";
 import Cart from "./pages/Cart";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+
 
 
 function App() {
@@ -19,6 +24,10 @@ function App() {
             <Route path="/" element={<Home></Home>} />
             <Route path="/singleproduct" element={<SinglePage></SinglePage>} />
             <Route path="/cart" element={<Cart></Cart>} />
+            <Route path="/signup" element={<SignUp></SignUp>} />
+            <Route path="/login" element={<Login></Login>} />
+            <Route path="/about" element={<About></About>} />
+            <Route path="/contact" element={<Contact></Contact>} />
         </Routes>
       </BrowserRouter>
       </State>

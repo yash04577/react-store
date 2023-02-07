@@ -126,21 +126,10 @@ const Home = () => {
 
 
   const viewToggler = () =>{
+
     const wrapper = document.getElementsByClassName("productCardWrapper");
     const imgContainer = document.getElementsByClassName("productCardImgContainer");
     const cardParagraph = document.getElementsByClassName("productCardPara");
-
-    
-
-  
-
-    
-
-    // console.log(cardParagraph)
-    console.log(wrapper)
-    // wrapper[0].style.color = "red"
-    // wrapper.style.color = "red"
-    console.log("clicked on view button ")
 
     const wrapperArray = Array.from(wrapper);
     const imgContainerArray = Array.from(imgContainer);
@@ -169,6 +158,7 @@ const Home = () => {
       wrapperArray.forEach(elem=>{
         elem.style.display = "flex";
         elem.style.width = "950px";
+        elem.style.height = "250px";
         elem.style.marginLeft = "2rem";
       })
   
@@ -244,7 +234,7 @@ const Home = () => {
             <Products heading={"skincare"} filterPrice={fprice}></Products>
             <br />
             <br />
-            {/* <Products heading={"groceries"} filterPrice={fprice}></Products>
+            <Products heading={"groceries"} filterPrice={fprice}></Products>
             <br />
             <br />
             <Products heading={"home-decoration"} filterPrice={fprice}></Products>
@@ -291,7 +281,7 @@ const Home = () => {
             <br />
             <Products heading={"lighting"} filterPrice={fprice}></Products>
             <br />
-            <br />  */}
+            <br />  
 
         </Container>
 

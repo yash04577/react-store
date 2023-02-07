@@ -210,7 +210,7 @@ const CheckOutBtn = styled.button`
 `
 
 const BgContainer = styled.div.attrs({
-    id:"cartBgContainer"
+    id: "cartBgContainer"
 })`
     /* border: 2px solid red; */
     position: absolute;;
@@ -230,7 +230,9 @@ const BgImg = styled.img`
 const Cart = () => {
 
     const context = useContext(Context);
-    const[cnt, setCnt] = useState(0);
+    const [promoCode, setPromoCode] = useState("");
+
+
 
     // let totalPrice = 0;
 
@@ -238,31 +240,41 @@ const Cart = () => {
         context.removeFromCart(item);
     }
 
-    const test = () =>{
-        if(context.getCartItem().length == 0){
+    const test = () => {
+        if (context.getCartItem().length == 0) {
             // console.log("cart is empty")
             document.getElementById("cartBgContainer").style.zIndex = 1;
         }
-        
-        else{
+
+        else {
             document.getElementById("cartBgContainer").style.zIndex = -1;
 
         }
     }
 
 
-    const incrementItem = (item) =>{
+    const incrementItem = (item) => {
         context.updateCartItems(item);
     }
 
-    const decrementItem = (item) =>{
-       
-        if(item.quantity > 1){
+    const decrementItem = (item) => {
+
+        if (item.quantity > 1) {
             context.removePrice(item.price);
         }
         const check = item.quantity > 1 ? item.quantity-- : 1
 
-        
+
+    }
+
+
+    const promoChangeHandler = () => {
+        setPromoCode(document.getElementById("promo").value);
+
+    }
+
+    const checkoutHandler = () =>{
+        window.alert("Thanks for Shopping")
     }
 
 
@@ -293,9 +305,9 @@ const Cart = () => {
                                         <ItemName>{item.title}</ItemName>
                                     </ItemNameContainer>
                                     <CountContainer>
-                                        <button onClick={()=>incrementItem(item)}>+</button>
+                                        <button onClick={() => incrementItem(item)}>+</button>
                                         {item.quantity}
-                                        <button onClick={()=>decrementItem(item)}>-</button>
+                                        <button onClick={() => decrementItem(item)}>-</button>
                                     </CountContainer>
                                     <PriceContainer>{item.price}$</PriceContainer>
                                     <RemoveBtnContainer>
@@ -318,8 +330,8 @@ const Cart = () => {
                         <ShippingPrice>Standard-Delivery 5$</ShippingPrice>
                     </ShippingContainer>
                     <DiscountContainer>
-                        <DiscountHeading>PROMO CODE</DiscountHeading>
-                        <DiscountInput placeholder="Enter Your Code Here" ></DiscountInput>
+                        <DiscountHeading >PROMO CODE</DiscountHeading>
+                        <DiscountInput placeholder="Enter Your Code Here" value={promoCode} id="promo" onChange={promoChangeHandler}></DiscountInput>
                     </DiscountContainer>
                     <br />
                     <br />
@@ -327,9 +339,10 @@ const Cart = () => {
                     <TotalContainer>
                         <TotalHeading>TOTAL PRICE</TotalHeading>
                         <TotalPrice>{context.getCartItemsPrice() + 5}$</TotalPrice>
+                        {/* <TotalPrice>{checkPrice()}$</TotalPrice> */}
                     </TotalContainer>
                     <CheckoutContainer>
-                        <CheckOutBtn>CHECKOUT</CheckOutBtn>
+                        <CheckOutBtn onClick={checkoutHandler}>CHECKOUT</CheckOutBtn>
                     </CheckoutContainer>
                 </SummaryContainer>
             </Container>

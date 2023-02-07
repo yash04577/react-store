@@ -155,15 +155,16 @@ const Navbar = () => {
                     </Logo>
                     <NavLinks>
                         <NavLink to="/" >Home</NavLink>
-                        <NavLink to="#" >About</NavLink>
-                        <NavLink to="#" >Contact</NavLink>
+                        <NavLink to="/about" >About</NavLink>
+                        <NavLink to="/contact" >Contact</NavLink>
                         <SerachInput >
                             <input type="text" id='searchInput' value={searchQuery} onChange={searchChangeHandler} style={{ width: "100%", paddingLeft: "10px" }} placeholder="Search Here"></input>
                             <a href="#searchItemsContainer">
                                 <SearchOutlined onClick={() => searchClickHandler()} style={{ cursor: "pointer", position: "absolute", right: "0px", marginRight: "7px", top: "2px" }}></SearchOutlined>
                             </a>
                         </SerachInput>
-                        <NavLink to="#"><PersonOutlineOutlined /></NavLink>
+                        <NavLink to="/signup"><PersonOutlineOutlined /></NavLink>
+                        {/* <NavLink to="/login"><PersonOutlineOutlined /></NavLink> */}
                         {/* <Badge badgeContent={context.getCartItem().length} color="primary" style={{ marginRight: "20px" }}> */}
                         <Badge badgeContent={context.getBadgeCount()} color="primary" style={{ marginRight: "20px" }}>
                             <NavLink to="/cart"><ShoppingCartOutlined /></NavLink>

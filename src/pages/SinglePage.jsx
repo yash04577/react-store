@@ -1,4 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Context from '../context/Context'
 
@@ -131,6 +132,7 @@ const ReplaceContainer = styled.div`
 
 const SinglePage = () => {
 
+    const navigate = useNavigate();
     const context = useContext(Context);
     const [product, setProduct] = useState({images:[ "https://i.dummyjson.com/data/products/1/1.jpg", "https://i.dummyjson.com/data/products/1/2.jpg", "https://i.dummyjson.com/data/products/1/3.jpg"]})
     const [mainImagUrl, setMainImageUrl] = useState("");
@@ -139,8 +141,14 @@ const SinglePage = () => {
         context.updateCartItems(item);   
     }
 
+    const buyHandler = (item) =>{
+        addHandler(item)
+        navigate("/cart");
+    }
+
 
     useEffect(() => {
+
         setProduct(context.getSingleProduct());
     })
     
@@ -186,7 +194,7 @@ const SinglePage = () => {
                     {product.price}$
                 </Price>
                 <ButtonContainer>
-                    <BuyButton>Buy Now</BuyButton>
+                    <BuyButton onClick={()=>buyHandler(product)}>Buy Now</BuyButton>
                     <AddCartButton onClick={()=>addHandler(product)}>Add to Cart</AddCartButton>
                 </ButtonContainer>
                 <FreeDeliveryContainer>
